@@ -5,7 +5,9 @@ Una semplice raccolta di script che possono essere utili alla preparazione dell'
 ## `schemi_generali.m`
 
 Disegna in un'unica finestra:
+
  **(Tutti i diagrammi sono riferiti alla FdT passata come parametro, senza considerare anello chiuso o aperto)**
+ 
   - Luogo delle radici diretto
   - Luogo delle radici inverso
   - Diagramma di Bode

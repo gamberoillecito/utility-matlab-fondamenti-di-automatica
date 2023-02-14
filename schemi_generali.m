@@ -1,7 +1,16 @@
-function [] = schemi_generali(G)
+function [] = schemi_generali(G, k_range, k_step)
+
+    if nargin <= 2
+        k_step = 1;
+    end
+
+    if nargin == 1
+        k_range = [1,1];
+    end
+
     r = 8;
     c = 6;
-
+   
     % luogo diretto
     subplot(r,c,[1,8])
     rlocus(G);
@@ -16,24 +25,57 @@ function [] = schemi_generali(G)
     
     % gradino
     h = subplot(r,c,[22,29]);
+
+    hold on;
+    for i = k_range(1):k_step:k_range(2)
+        FB = feedback(G, i);
+        step(FB, 'r');
+    end
     step(G);
+    hold off;
+    stepinfo(G);
 
     % impulso
     subplot(r,c, [40,47]);
+    hold on;
+    for i = k_range(1):k_step:k_range(2)
+        FB = feedback(G, i);
+        impulse(FB, 'r');
+    end
     impulse(G);
+    hold off;
     
     % rampa
     subplot(r,c, [36,48]);
     t = 0:0.01:10;
+    hold on;
+    for i = k_range(1):k_step:k_range(2)
+        FB = feedback(G, i);
+        lsim(FB,t,t, 'r');
+    end
     lsim(G,t,t);
+    hold off;
 
     % nyquist
     subplot(r,c,[5,12]);
+    hold on;
+    for i = k_range(1):k_step:k_range(2)
+        FB = feedback(G, i);
+        nyquist(FB, 'r');
+    end
     nyquist(G);
+    hold off;
 
     % bode
     subplot(r,c, [19,45]);
-    margin(G);
+    hold on;
+    for i = k_range(1):k_step:k_range(2)
+        FB = feedback(G, i);
+        margin(FB, 'r');
+    end
+
+    margin(G, 'b');
+    hold off;
 
     % routh
     sr = subplot(r,c, [24,30]);
